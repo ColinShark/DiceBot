@@ -37,7 +37,8 @@ def start(app: Client, message: Message):
 @app.on_message(Filters.new_chat_members)
 def added(app: Client, message: Message):
     if app.get_me().id in [i.id for i in message.new_chat_members]:
-        message.reply_text(
+        app.send_message(
+            message.chat.id,
             START_GROUP.format(Emoji.GAME_DIE), disable_web_page_preview=True
         )
 
