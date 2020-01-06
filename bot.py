@@ -9,7 +9,7 @@ START = (
     + "I can roll you any amount of dice with any amount of sides. "
     + "Just send /roll and pass a die format like `2d6` for two six-sided die. "
     + "Maybe just `d4` for a four-sided die. Or even `5d20` for five 20-sided die.\n\n"
-    + "You can also [add me to groups](https://t.me/Rolling_Dice_Bot?startgroup=) "
+    + "You can also [add me to groups](https://t.me/Rolling_Dice_Bot?startgroup=yeet) "
     + "so I can roll you a dice there :D"
 )
 START_GROUP = (
