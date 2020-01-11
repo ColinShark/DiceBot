@@ -2,6 +2,7 @@ import re
 from random import randint
 
 from pyrogram import Client, Emoji, Filters, Message
+from pyrogram.errors import MessageTooLong
 
 RE_DICE = re.compile(r"(?P<count>\d*)d(?P<sides>\d+)")
 START = (
@@ -53,7 +54,10 @@ def roll(app: Client, message: Message):
             die = []
             for i in range(int(count)):
                 die.append(str(randint(1, int(sides))))
-            message.reply_text(DICE + "\n`" + "`, `".join(die) + "`")
+            try:
+                message.reply_text(DICE + "\n`" + "`, `".join(die) + "`")
+            except MessageTooLong:  # Handle messages that are >4096 characters long.
+                message.reply_text("Please try with less dice.")
 
     else:
         message.reply_text(DICE + "\n`" + str(randint(1, 6)) + "`")
