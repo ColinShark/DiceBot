@@ -55,10 +55,13 @@ def roll(app: Client, message: Message):
             die = []
             for i in range(int(count)):
                 die.append(str(randint(1, int(sides))))
-            try:
-                message.reply_text(DICE + "\n`" + "`, `".join(die) + "`")
-            except MessageTooLong:  # Handle messages that are >4096 characters long.
-                message.reply_text("Please try with less dice.")
+            if len(die) == 0:
+                message.reply_text("Please try with more dice.")
+            else:
+                try:
+                    message.reply_text(DICE + "\n`" + "`, `".join(die) + "`")
+                except MessageTooLong:  # Handle messages that are >4096 characters long.
+                    message.reply_text("Please try with less dice.")
 
     else:
         message.reply_text(DICE + "\n`" + str(randint(1, 6)) + "`")
