@@ -51,7 +51,10 @@ def roll(app: Client, message: Message):
         r = RE_DICE.match(message.command[1])
         if r:
             count = r.group("count") or 1
-            sides = r.group("sides")
+            sides = int(r.group("sides"))
+            if sides == 0:
+                message.reply_text("Please try with more sides.")
+                return
             die = []
             for i in range(int(count)):
                 die.append(str(randint(1, int(sides))))
