@@ -57,7 +57,7 @@ def roll(app: Client, message: Message):
                 return
             die = []
             for i in range(int(count)):
-                die.append(str(randint(1, int(sides))))
+                die.append(str(randint(1, sides)))
             if len(die) == 0:
                 message.reply_text("Please try with more dice.")
             else:
