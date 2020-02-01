@@ -40,7 +40,8 @@ def added(app: Client, message: Message):
     if app.get_me().id in [i.id for i in message.new_chat_members]:
         app.send_message(
             message.chat.id,
-            START_GROUP.format(Emoji.GAME_DIE), disable_web_page_preview=True
+            START_GROUP.format(Emoji.GAME_DIE),
+            disable_web_page_preview=True,
         )
 
 
