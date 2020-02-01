@@ -45,7 +45,7 @@ def added(app: Client, message: Message):
         )
 
 
-@app.on_message(Filters.command("roll") & ~Filters.edited)
+@app.on_message(Filters.command(["roll", "roll@Rolling_Dice_Bot"]) & ~Filters.edited)
 def roll(app: Client, message: Message):
     if len(message.command) > 1:
         r = RE_DICE.match(message.command[1])
