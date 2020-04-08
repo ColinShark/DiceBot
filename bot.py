@@ -28,17 +28,17 @@ app = Client(session_name="DiceBot")
 
 
 @app.on_message(Filters.command("start") & Filters.private)
-def start(app: Client, message: Message):
-    message.reply_text(
+async def start(app: Client, message: Message):
+    await message.reply_text(
         START.format(message.from_user.first_name, Emoji.GAME_DIE),
         disable_web_page_preview=True,
     )
 
 
 @app.on_message(Filters.new_chat_members)
-def added(app: Client, message: Message):
-    if app.get_me().id in [i.id for i in message.new_chat_members]:
-        app.send_message(
+async def added(app: Client, message: Message):
+    if (await app.get_me()).id in [i.id for i in message.new_chat_members]:
+        await app.send_message(
             message.chat.id,
             START_GROUP.format(Emoji.GAME_DIE),
             disable_web_page_preview=True,
@@ -46,28 +46,28 @@ def added(app: Client, message: Message):
 
 
 @app.on_message(Filters.command(["roll", "roll@Rolling_Dice_Bot"]) & ~Filters.edited)
-def roll(app: Client, message: Message):
+async def roll(app: Client, message: Message):
     if len(message.command) > 1:
         r = RE_DICE.match(message.command[1])
         if r:
             count = r.group("count") or 1
             sides = int(r.group("sides"))
             if sides == 0:
-                message.reply_text("Please try with more sides.")
+                await message.reply_text("Please try with more sides.")
                 return
             die = []
             for i in range(int(count)):
                 die.append(str(randint(1, sides)))
             if len(die) == 0:
-                message.reply_text("Please try with more dice.")
+                await message.reply_text("Please try with more dice.")
             else:
                 try:
-                    message.reply_text(DICE + "\n`" + "`, `".join(die) + "`")
+                    await message.reply_text(DICE + "\n`" + "`, `".join(die) + "`")
                 except MessageTooLong:  # Handle messages that are >4096 characters long.
-                    message.reply_text("Please try with less dice.")
+                    await message.reply_text("Please try with less dice.")
 
     else:
-        message.reply_text(DICE + "\n`" + str(randint(1, 6)) + "`")
+        await message.reply_text(DICE + "\n`" + str(randint(1, 6)) + "`")
 
 
 app.run()
